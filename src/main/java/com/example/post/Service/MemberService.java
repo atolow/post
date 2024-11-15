@@ -41,7 +41,7 @@ public class MemberService {
     }
     public MemberResponseDto login(String username, String password) {
         Member optionMember = memberRepository.findMemberByUsernameOrElseThrow(username);
-        if(!optionMember.getUsername().equals(username) && optionMember.getPassword().equals(password)){
+        if(!optionMember.getUsername().equals(username) || !optionMember.getPassword().equals(password)){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
         return new MemberResponseDto(optionMember.getId(), optionMember.getUsername(), optionMember.getEmail());
