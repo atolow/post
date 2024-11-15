@@ -60,7 +60,7 @@ public class MemberController {
             HttpServletRequest request
     ) {
 
-        MemberResponseDto responseDto = memberService.login(requestMemberDto.getUsername(), requestMemberDto.getPassword(),requestMemberDto.getEmail());
+        MemberResponseDto responseDto = memberService.login(requestMemberDto.getPassword(),requestMemberDto.getEmail());
         Long userId = responseDto.getId();
 
         // 실패시 예외처리
