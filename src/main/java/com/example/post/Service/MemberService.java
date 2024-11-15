@@ -1,6 +1,7 @@
 package com.example.post.Service;
 
 import com.example.post.Repository.MemberRepository;
+import com.example.post.dto.BoardResponseDto;
 import com.example.post.dto.MemberResponseDto;
 import com.example.post.dto.SignRequestMemberDto;
 import com.example.post.dto.SignResponseMemberDto;
@@ -42,6 +43,14 @@ public class MemberService {
         }
         Member findMember = optionMember.get();
         return new MemberResponseDto(findMember.getId(), findMember.getUsername(), findMember.getEmail());
+    }
+    public MemberResponseDto login(Long id, String username, String password) {
+        Member optionMember = memberRepository.findByIdOrElseThrow(id);
+        if(!optionMember.getUsername().equals(username) && optionMember.getPassword().equals(password)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+        return new MemberResponseDto(optionMember.getId(), optionMember.getUsername(), optionMember.getEmail());
+
     }
 
     public void delete(Long id){
