@@ -39,9 +39,9 @@ public class MemberService {
         Member findMember = optionMember.get();
         return new MemberResponseDto(findMember.getId(), findMember.getUsername(), findMember.getEmail());
     }
-    public MemberResponseDto login(String username, String password) {
+    public MemberResponseDto login(String username, String password,String email) {
         Member optionMember = memberRepository.findMemberByUsernameOrElseThrow(username);
-        if(!optionMember.getUsername().equals(username) || !optionMember.getPassword().equals(password)){
+        if(!optionMember.getEmail().equals(email) || !optionMember.getPassword().equals(password)){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
         return new MemberResponseDto(optionMember.getId(), optionMember.getUsername(), optionMember.getEmail());
