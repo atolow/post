@@ -1,16 +1,11 @@
 package com.example.post.Service;
 
 import com.example.post.Repository.MemberRepository;
-import com.example.post.dto.BoardResponseDto;
 import com.example.post.dto.MemberResponseDto;
-import com.example.post.dto.SignRequestMemberDto;
 import com.example.post.dto.SignResponseMemberDto;
-import com.example.post.entity.Board;
 import com.example.post.entity.Member;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -44,8 +39,8 @@ public class MemberService {
         Member findMember = optionMember.get();
         return new MemberResponseDto(findMember.getId(), findMember.getUsername(), findMember.getEmail());
     }
-    public MemberResponseDto login(Long id, String username, String password) {
-        Member optionMember = memberRepository.findByIdOrElseThrow(id);
+    public MemberResponseDto login(String username, String password) {
+        Member optionMember = memberRepository.findMemberByUsernameOrElseThrow(username);
         if(!optionMember.getUsername().equals(username) && optionMember.getPassword().equals(password)){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
